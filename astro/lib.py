@@ -41,7 +41,7 @@ class Astro:
         force_geoip = kwargs.get("force_geoip")
 
         if all((lat, lon)):
-            location = Location(lat, lon, tz=tz)
+            location = Location(float(lat), float(lon), tz=tz)
         else:
             location = IPInfoLocation.from_ip(use_cache=not force_geoip)
 

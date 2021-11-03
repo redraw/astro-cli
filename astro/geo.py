@@ -1,5 +1,4 @@
 import json
-import math
 import base64
 import os
 import urllib.request
@@ -25,8 +24,8 @@ class Location:
 
     @property
     def coords_display(self):
-        lat = f"{math.abs(self.lat)}°{'N' if self.lat > 0 else 'S'}"
-        lon = f"{math.abs(self.lon)}°{'E' if self.lon > 0 else 'W'}"
+        lat = f"{abs(self.lat):.2f}°{'N' if self.lat > 0 else 'S'}"
+        lon = f"{abs(self.lon):.2f}°{'E' if self.lon > 0 else 'W'}"
         return f"{lat} {lon}"
 
 
