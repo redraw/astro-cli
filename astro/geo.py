@@ -1,7 +1,8 @@
+import os
 import json
 import base64
-import os
-import urllib.request
+import pytz
+from urllib import request
 
 from astro.cache import cache
 
@@ -11,7 +12,9 @@ class Location:
         self.lat = lat
         self.lon = lon
         self.name = name
-        self.tz = None
+
+        if tz and tz in pytz.all_timezones:
+            self.tz = pytz.timezone(tz)
 
     @classmethod
     def from_ip(cls):
@@ -38,12 +41,12 @@ class IPInfoLocation(Location):
         if use_cache and (response := cache.get("ipinfo")):
             return cls._from_response(response)
 
-        req = urllib.request.Request("https://ipinfo.io")
+        req = request.Request("https://ipinfo.io")
 
         auth = f"{token}:".encode("ascii")
         req.add_header("Authorization", f"Basic {base64.b64encode(auth)}")
 
-        response = urllib.request.urlopen(req).read()
+        response = request.urlopen(req).read()
         cache.set("ipinfo", response, expire=cls.CACHE_TIMEOUT)
 
         return cls._from_response(response)

@@ -1,7 +1,7 @@
 import json
 import functools
 import dateparser
-from typing import Union
+from typing import Type
 
 from skyfield import api, almanac, eclipselib
 from tabulate import tabulate
@@ -19,7 +19,7 @@ parse_date = functools.partial(
 class Astro:
     def __init__(
         self,
-        location: Union[Location, IPInfoLocation],
+        location: Type[Location],
         date: str = None,
         format: str = "table",
     ):
